@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_almirtech_ecommerce/basewidget/custom_image.dart';
 import 'package:flutter_almirtech_ecommerce/basewidget/custom_slider/carousel_options.dart';
 import 'package:flutter_almirtech_ecommerce/basewidget/custom_slider/custom_slider.dart';
 import 'package:flutter_almirtech_ecommerce/features/home/shimmer/latest_product_shimmer.dart';
 import 'package:flutter_almirtech_ecommerce/features/product/domain/model/product_model.dart';
+import 'package:flutter_almirtech_ecommerce/features/new_edits/provider/new_edits_provider.dart';
 import 'package:flutter_almirtech_ecommerce/helper/product_type.dart';
 import 'package:flutter_almirtech_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_almirtech_ecommerce/main.dart';
@@ -108,92 +110,92 @@ class _HomePageNewState extends State<HomePageNew> {
     Provider.of<FlashDealProvider>(context, listen: false)
         .getMegaDealList(true, true);
     _loadData(false);
+    Provider.of<NewEditsRepo>(context, listen: false).fetch_Slider(
+        "https://clothing-store-production.up.railway.app/api/v1/sliders");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorResources.homeBg,
-      body: SafeArea(
-        child: Stack(children: [
-          Consumer<ProductProvider>(
-            builder: (BuildContext context, ProductProvider prodProvider,
-                Widget? child) {
-              List<Product>? productList;
-              productList = prodProvider.lProductList;
-              return productList != null
-                  ? CarouselSlider(
-                      options: CarouselOptions(
-                          height: MediaQuery.of(context).size.height,
-                          viewportFraction: 1.0,
-                          enlargeCenterPage: false,
-                          autoPlay: true,
-                          scrollDirection: Axis.vertical),
-                      items: productList.map((i) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return SizedBox(
+      body: Stack(children: [
+        Consumer<NewEditsRepo>(
+          builder: (BuildContext context, provider, Widget? child) {
+            return provider.sliderImages
+                        .where((element) => element.category == "MAIN")
+                        .toList() !=
+                    null
+                ? CarouselSlider(
+                    options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height,
+                        viewportFraction: 1.0,
+                        enlargeCenterPage: false,
+                        autoPlay: true,
+                        scrollDirection: Axis.vertical),
+                    items: provider.sliderImages
+                        .where((element) => element.category == "MAIN")
+                        .map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              child: CachedNetworkImage(
+                                imageUrl: i.lLinks!.self!.href.toString(),
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    Image.asset(Images.placeholder),
+                              ));
+                        },
+                      );
+                    }).toList(),
+                  )
+                : CarouselSlider(
+                    options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height,
+                        viewportFraction: 1.0,
+                        enlargeCenterPage: false,
+                        autoPlay: true,
+                        scrollDirection: Axis.vertical),
+                    items: [1, 2, 3].map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Shimmer.fromColors(
+                            child: SizedBox(
                                 height: MediaQuery.of(context).size.height,
                                 width: MediaQuery.of(context).size.width,
-                                child: CustomImage(
-                                  placeholder: 'assets/images/ph1.jpg',
-                                  fit: BoxFit.contain,
-                                  image:
-                                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls!.productThumbnailUrl}/${i.thumbnail}',
-                                ));
-                          },
-                        );
-                      }).toList(),
-                    )
-                  : CarouselSlider(
-                      options: CarouselOptions(
-                          height: MediaQuery.of(context).size.height,
-                          viewportFraction: 1.0,
-                          enlargeCenterPage: false,
-                          autoPlay: true,
-                          scrollDirection: Axis.vertical),
-                      items: [1, 2, 3].map((i) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Shimmer.fromColors(
-                              child: SizedBox(
-                                  height: MediaQuery.of(context).size.height,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: ColorResources.iconBg(),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 1,
-                                              blurRadius: 5)
-                                        ]),
-                                  )),
-                              baseColor: Theme.of(context).cardColor,
-                              highlightColor: Colors.grey[300]!,
-                              enabled: true,
-                            );
-                          },
-                        );
-                      }).toList(),
-                    );
-            },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: ColorResources.iconBg(),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            spreadRadius: 1,
+                                            blurRadius: 5)
+                                      ]),
+                                )),
+                            baseColor: Theme.of(context).cardColor,
+                            highlightColor: Colors.grey[300]!,
+                            enabled: true,
+                          );
+                        },
+                      );
+                    }).toList(),
+                  );
+          },
+        ),
+        //
+        Positioned(
+          bottom: 20,
+          left: 0,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: InkWell(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const SearchScreen())),
+                child:  SearchWidgetHomePage(color: Theme.of(context).primaryColor)),
           ),
-          //
-          Positioned(
-            bottom: 20,
-            left: 0,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const SearchScreen())),
-                  child: const SearchWidgetHomePage()),
-            ),
-          )
-        ]),
-      ),
+        )
+      ]),
     );
   }
 }
@@ -317,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => const SearchScreen())),
-                          child: const SearchWidgetHomePage()))),
+                          child:  SearchWidgetHomePage(color: Theme.of(context).primaryColor)))),
               SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

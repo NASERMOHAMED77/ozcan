@@ -46,7 +46,9 @@ class FeaturedProductView extends StatelessWidget {
                   itemCount: productList.length,
                   itemBuilder: (context, index, _) {
 
-                    return ProductWidget(productModel: productList![index], );
+                    return ProductWidget(productModel: productList![index], 
+                          color: Theme.of(context).highlightColor,
+                    );
                   },
                 ),
               ) :
@@ -58,7 +60,9 @@ class FeaturedProductView extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
-                  return ProductWidget(productModel: productList![index]);
+                  return ProductWidget(productModel: productList![index],
+                          color: Theme.of(context).highlightColor,
+                  );
                 },
               ):
               const SizedBox.shrink() :

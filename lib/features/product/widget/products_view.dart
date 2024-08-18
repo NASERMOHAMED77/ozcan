@@ -80,7 +80,9 @@ class ProductView extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
-              return ProductWidget(productModel: productList![index]);
+              return ProductWidget(productModel: productList![index],
+                          color: Theme.of(context).highlightColor,
+              );
             },
           ) : const NoInternetOrDataScreen(isNoInternet: false): ProductShimmer(isHomePage: isHomePage ,isEnabled: prodProvider.firstLoading),
 

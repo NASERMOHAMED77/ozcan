@@ -139,7 +139,7 @@ class _FashionThemeHomePageState extends State<FashionThemeHomePage> {
             SliverPersistentHeader(pinned: true,
                 delegate: SliverDelegate(
                     child: InkWell(onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SearchScreen())),
-                        child: const SearchWidgetHomePage()))),
+                        child:  SearchWidgetHomePage(color: Theme.of(context).primaryColor,)))),
 
             SliverToBoxAdapter(
               child: Column(children: [

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_almirtech_ecommerce/basewidget/custom_image.dart';
 import 'package:flutter_almirtech_ecommerce/basewidget/title_row.dart';
@@ -203,84 +204,96 @@ class CategoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List images = [
-      "assets/images/woman.jpg",
-      "assets/images/man.jpg",
-      "assets/images/kids.jpg",
-    ];
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        children: [
-          Consumer<CategoryController>(
-              builder: (context, categoryController, _) {
-            return (categoryController.categoryList != null &&
-                    categoryController.categoryList!.isNotEmpty)
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
+          child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Consumer<CategoryController>(
+                builder: (context, categoryController, _) {
+              return (categoryController.categoryList != null &&
+                      categoryController.categoryList!.isNotEmpty)
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: Dimensions.paddingSizeLarge,
-                              vertical: Dimensions.paddingSizeExtraSmall),
-                          child: Text(
-                            getTranslated('choose_category', context)
-                                .toString(),
-                            style: TextStyle(fontSize: 20),
+                            ),
+                            child: Text(
+                              getTranslated('choose_category', context)
+                                  .toString(),
+                              style: TextStyle(fontSize: 20),
+                            ),
                           ),
-                        ),
-                        SizedBox(
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * .85,
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount:
+                                  categoryController.categoryList!.length,
+                              shrinkWrap: true,
+                              itemBuilder: (BuildContext context, int index) {
+                                return InkWell(
+                                    onTap: () {
+
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  BrandAndCategoryProductScreen(
+                                                    isBrand: false,
+                                                    category: categoryController
+                                                        .categoryList![index]
+                                                        .slug
+                                                        .toString()
+                                                        .toUpperCase(),
+                                                    id: categoryController
+                                                        .categoryList![index].id
+                                                        .toString(),
+                                                    name: categoryController
+                                                        .categoryList![index]
+                                                        .name,
+                                                  )));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(25),
+                                        child: CachedNetworkImage(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                .17,
+                                            fit: BoxFit.fill,
+                                            imageUrl:
+                                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls!.categoryImageUrl}/${categoryController.categoryList![index].icon}'),
+                                      ),
+                                    ));
+                              },
+                            ),
+                          )
+                        ],
+                      ))
+                  : Shimmer.fromColors(
+                      child: SizedBox(
                           height: 500,
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: categoryController.categoryList!.length,
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                BrandAndCategoryProductScreen(
-                                                  isBrand: false,
-                                                  id: categoryController
-                                                      .categoryList![index].id
-                                                      .toString(),
-                                                  name: categoryController
-                                                      .categoryList![index]
-                                                      .name,
-                                                )));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(25),
-                                      child: Image.asset(images[index]),
-                                    ),
-                                  ));
-                            },
-                          ),
-                        )
-                      ],
-                    ))
-                : Shimmer.fromColors(
-                    child: SizedBox(
-                        height: 500,
-                        child: ListView.builder(itemBuilder: (context, index) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.width * .35,
-                          );
-                        })),
-                    baseColor: Theme.of(context).cardColor,
-                    highlightColor: Colors.grey[300]!,
-                    enabled: true,
-                  );
-          })
-        ],
+                          child:
+                              ListView.builder(itemBuilder: (context, index) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.width * .35,
+                            );
+                          })),
+                      baseColor: Theme.of(context).cardColor,
+                      highlightColor: Colors.grey[300]!,
+                      enabled: true,
+                    );
+            })
+          ],
+        ),
       )),
     );
   }

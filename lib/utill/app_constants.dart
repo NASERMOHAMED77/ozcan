@@ -7,16 +7,21 @@ class AppConstants {
   static const String baseUrl = 'https://boutique.ozcanbrand.com';
   static const String userId = 'userId';
   static const String name = 'name';
+  //////////////////////////////
   static const String categoriesUri = '/api/v1/categories?guest_id=1';
+  //////////////////////////////
   static const String brandUri = '/api/v1/brands?guest_id=1';
   static const String brandProductUri = '/api/v1/brands/products/';
   static const String categoryProductUri = '/api/v1/categories/products/';
   static const String registrationUri = '/api/v1/auth/register';
   static const String loginUri = '/api/v1/auth/login';
   static const String logOut = '/api/v1/auth/logout';
+  ////////////////////////////////
   static const String latestProductUri = '/api/v1/products/latest?guest_id=1&limit=10&&offset=';
   static const String newArrivalProductUri = '/api/v1/products/latest?guest_id=1&limit=10&&offset=';
+  /////////////
   static const String topProductUri = '/api/v1/products/top-rated?guest_id=1&limit=10&&offset=';
+  ///////////////////
   static const String bestSellingProductUri = '/api/v1/products/best-sellings?guest_id=1&limit=10&offset=';
   static const String discountedProductUri = '/api/v1/products/discounted-product?guest_id=1&limit=10&&offset=';
   static const String featuredProductUri = '/api/v1/products/featured?guest_id=1&limit=10&&offset=';
@@ -26,14 +31,14 @@ class AppConstants {
   static const String searchUri = '/api/v1/products/filter';
   static const String getSuggestionProductName = '/api/v1/products/suggestion-product?guest_id=1&name=';
   static const String configUri = '/api/v1/config';
-  static const String addWishListUri = '/api/v1/customer/wish-list/add?product_id=';
+  static const String addWishListUri = 'i/v1/customer/address/add';
+  static const String getWishListUri = '/api/v1/customer/wish-list/api/v1/customer/wish-list/add?product_id=';
   static const String removeWishListUri = '/api/v1/customer/wish-list/remove?product_id=';
   static const String updateProfileUri = '/api/v1/customer/update-profile';
   static const String customerUri = '/api/v1/customer/info';
   static const String addressListUri = '/api/v1/customer/address/list';
   static const String removeAddressUri = '/api/v1/customer/address';
-  static const String addAddressUri = '/api/v1/customer/address/add';
-  static const String getWishListUri = '/api/v1/customer/wish-list';
+  static const String addAddressUri = '/ap';
   static const String supportTicketUri = '/api/v1/customer/support-ticket/create';
   static const String getBannerList = '/api/v1/banners';
   static const String relatedProductUri = '/api/v1/products/related-products/';
@@ -120,7 +125,9 @@ class AppConstants {
   static const String reorder = '/api/v1/customer/order/again';
   static const String walletBonusList = '/api/v1/customer/wallet/bonus-list';
   static const String moreStore = '/api/v1/seller/more';
+  ////////////////
   static const String justForYou = '/api/v1/products/just-for-you?guest_id=1';
+  ///////////////////////
   static const String mostSearching = '/api/v1/products/most-searching?guest_id=1';
   static const String contactUsUri = '/api/v1/contact-us';
   static const String attributeUri = '/api/v1/attributes';
@@ -140,6 +147,21 @@ static const String otpVerificationForDigitalProduct = '/api/v1/customer/order/d
 
 
 
+  ///new edits
+  static const String editsBaseUrl = "https://clothing-store-production.up.railway.app/";
+  static const String getMainSlider = "api/v1/sliders";
+  static const String uploadMainSlider = "api/v1/sliders/upload?title=NONE";
+  static const String getCategorySlider = "api/v1/categorical-sliders";
+  static const String uploadCategorySlider ="api/v1/categorical-sliders/upload?title=NONE";
+  static const String getStory = "api/v1/story";
+  static const String uploadStory = "api/v1/story/upload?title=NONE";
+  static const String getHighLigths = "api/v1/highlights";
+  static const String uploadHighLigths = "api/v1/highlights/upload?title=NONE";
+  static const String deleteHighLigths = "api/v1/highlights/";
+  static const String deletestory = "api/v1/story/";
+  static const String deleteMainSlider = "api/v1/sliders/";
+  static const String deleteCategorySlider = "api/v1/categorical-sliders/";
+  static const String getCategory = "api/v1/category";
 
 
   // sharePreference

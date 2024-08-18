@@ -35,7 +35,9 @@ class _ShopFeaturedProductViewListState extends State<ShopFeaturedProductViewLis
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
-                  return ProductWidget(productModel: productProvider.sellerWiseFeaturedProduct!.products![index]);
+                  return ProductWidget(productModel: productProvider.sellerWiseFeaturedProduct!.products![index],
+                          color: Theme.of(context).highlightColor,
+                  );
                 },
               )): const SizedBox() : ProductShimmer(isEnabled: productProvider.sellerWiseFeaturedProduct == null, isHomePage: false);
         }

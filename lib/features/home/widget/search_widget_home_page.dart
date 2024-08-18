@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_almirtech_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_almirtech_ecommerce/theme/provider/theme_provider.dart';
@@ -8,8 +9,11 @@ import 'package:provider/provider.dart';
 import '../../category/view/all_category_screen.dart';
 
 class SearchWidgetHomePage extends StatelessWidget {
-  const SearchWidgetHomePage({super.key});
-
+   SearchWidgetHomePage({
+    Key? key,
+    required this.color,
+  }) : super(key: key);
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,7 +54,7 @@ class SearchWidgetHomePage extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color:color,
                       borderRadius: const BorderRadius.all(
                           Radius.circular(Dimensions.paddingSizeExtraSmall))),
                   child: Icon(Icons.search,
@@ -74,7 +78,7 @@ class SearchWidgetHomePage extends StatelessWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color:color?? Theme.of(context).primaryColor,
                           borderRadius: const BorderRadius.all(Radius.circular(
                               Dimensions.paddingSizeExtraSmall))),
                       child: Icon(Icons.menu,

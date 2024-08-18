@@ -80,7 +80,9 @@ class _SearchProductWidgetState extends State<SearchProductWidget> {
                       shrinkWrap: true,
                       itemCount: searchProductProvider.searchedProduct!.products!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return ProductWidget(productModel: searchProductProvider.searchedProduct!.products![index]);},
+                        return ProductWidget(productModel: searchProductProvider.searchedProduct!.products![index],
+                          color: Theme.of(context).highlightColor,
+                        );},
                     )),
               ),
             ],

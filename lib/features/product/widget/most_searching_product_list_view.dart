@@ -42,7 +42,9 @@ class _MostSearchingProductListViewState extends State<MostSearchingProductListV
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return ProductWidget(productModel: productProvider.mostSearchingProduct!.products![index]);
+                    return ProductWidget(productModel: productProvider.mostSearchingProduct!.products![index],
+                          color: Theme.of(context).highlightColor,
+                    );
                   }, crossAxisCount: 2,
                 ),
               ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_almirtech_ecommerce/features/new_edits/provider/new_edits_provider.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -92,6 +93,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<FlashDealProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<FeaturedDealProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<BrandController>()),
+      ChangeNotifierProvider(create: (context) => NewEditsRepo()),
       ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<BannerController>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProductDetailsProvider>()),

@@ -36,7 +36,9 @@ class _ShopProductViewListState extends State<ShopProductViewList> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return ProductWidget(productModel: productProvider.sellerProduct!.products![index]);
+                return ProductWidget(productModel: productProvider.sellerProduct!.products![index],
+                          color: Theme.of(context).highlightColor,
+                );
               },
             )): const NoInternetOrDataScreen(isNoInternet: false, icon: Images.noProduct, message: 'no_product',): const ProductShimmer(isEnabled: true, isHomePage: false);
       }

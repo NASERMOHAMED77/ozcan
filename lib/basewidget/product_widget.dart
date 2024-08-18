@@ -19,11 +19,10 @@ import '../features/cart/controllers/cart_controller.dart';
 import '../features/cart/domain/models/cart_model.dart';
 import '../features/product/provider/product_details_provider.dart';
 
-
 class ProductWidget extends StatelessWidget {
   final Product productModel;
-
-  const ProductWidget({super.key, required this.productModel});
+  Color color;
+   ProductWidget({super.key, required this.productModel,required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class ProductWidget extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).highlightColor,
+          color: color,
           boxShadow:
               Provider.of<ThemeProvider>(context, listen: false).darkTheme
                   ? null
@@ -59,7 +58,6 @@ class ProductWidget extends StatelessWidget {
         ),
         child: Stack(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-           
             Container(
                 height: 175,
                 decoration: BoxDecoration(
@@ -98,53 +96,100 @@ class ProductWidget extends StatelessWidget {
                     // if(productModel.currentStock! < productModel.minimumOrderQuantity! && productModel.productType == 'physical')
                     // Padding(padding:  EdgeInsets.zero,
                     //   child: Text(getTranslated('out_of_stock', context)??'', style: textRegular.copyWith(color: const Color(0xFFF36A6A)))),
-      Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 FavouriteButton(backgroundColor: ColorResources.getImageBg(context),
-                   productId: productModel!.id),
-             
-                 if(Provider.of<SplashProvider>(context, listen: false).configModel!.activeTheme != "default")
-                 const SizedBox(height: Dimensions.paddingSizeSmall,),
-                 if(Provider.of<SplashProvider>(context, listen: false).configModel!.activeTheme != "default")
-                 InkWell(onTap: () {
-                   if(Provider.of<AuthController>(context, listen: false).isLoggedIn()){
-                     Provider.of<CompareProvider>(context, listen: false).addCompareList(productModel!.id!);
-                   }else{
-                     showModalBottomSheet(backgroundColor: Colors.transparent,
-                         context: context, builder: (_)=> const NotLoggedInBottomSheet());
-                   }
-                 },
-                   child: Consumer<CompareProvider>(
-                     builder: (context, compare,_) {
-                       return Card(elevation: 2,
-                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                         child: Container(width: 40, height: 40,
-                           decoration: BoxDecoration(color: compare.compIds.contains(productModel!.id) ? Theme.of(context).primaryColor: Theme.of(context).cardColor ,
-                             shape: BoxShape.circle,
-                           ),
-                           child: Padding(padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                             child: Image.asset(Images.compare, color: compare.compIds.contains(productModel!.id) ?Theme.of(context).cardColor : Theme.of(context).primaryColor),)));
-                     }
-                   ),
-                 ),
-                 const SizedBox(height: Dimensions.paddingSizeSmall,),
-             
-             
-                 InkWell(onTap: () {
-                     if(Provider.of<ProductDetailsProvider>(context, listen: false).sharableLink != null) {
-                       Share.share(Provider.of<ProductDetailsProvider>(context, listen: false).sharableLink!);
-                     }
-                   },
-                   child: Card(elevation: 2,
-                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                     child: Container(width: 40, height: 40,
-                       decoration: BoxDecoration(color: Theme.of(context).cardColor, shape: BoxShape.circle),
-                       child: Padding(padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                         child: Image.asset(Images.share, color: Theme.of(context).primaryColor)))))
-               ],
-             ),
-        
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FavouriteButton(
+                            backgroundColor: ColorResources.getImageBg(context),
+                            productId: productModel!.id),
+                        if (Provider.of<SplashProvider>(context, listen: false)
+                                .configModel!
+                                .activeTheme !=
+                            "default")
+                          const SizedBox(
+                            height: Dimensions.paddingSizeSmall,
+                          ),
+                        if (Provider.of<SplashProvider>(context, listen: false)
+                                .configModel!
+                                .activeTheme !=
+                            "default")
+                          InkWell(
+                            onTap: () {
+                              if (Provider.of<AuthController>(context,
+                                      listen: false)
+                                  .isLoggedIn()) {
+                                Provider.of<CompareProvider>(context,
+                                        listen: false)
+                                    .addCompareList(productModel!.id!);
+                              } else {
+                                showModalBottomSheet(
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (_) =>
+                                        const NotLoggedInBottomSheet());
+                              }
+                            },
+                            child: Consumer<CompareProvider>(
+                                builder: (context, compare, _) {
+                              return Card(
+                                  elevation: 2,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: compare.compIds
+                                                .contains(productModel!.id)
+                                            ? Theme.of(context).primaryColor
+                                            : Theme.of(context).cardColor,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(
+                                            Dimensions.paddingSizeSmall),
+                                        child: Image.asset(Images.compare,
+                                            color: compare.compIds
+                                                    .contains(productModel!.id)
+                                                ? Theme.of(context).cardColor
+                                                : Theme.of(context)
+                                                    .primaryColor),
+                                      )));
+                            }),
+                          ),
+                        const SizedBox(
+                          height: Dimensions.paddingSizeSmall,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              if (Provider.of<ProductDetailsProvider>(context,
+                                          listen: false)
+                                      .sharableLink !=
+                                  null) {
+                                Share.share(Provider.of<ProductDetailsProvider>(
+                                        context,
+                                        listen: false)
+                                    .sharableLink!);
+                              }
+                            },
+                            child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context).cardColor,
+                                        shape: BoxShape.circle),
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(
+                                            Dimensions.paddingSizeSmall),
+                                        child: Image.asset(Images.share,
+                                            color: Theme.of(context)
+                                                .primaryColor)))))
+                      ],
+                    ),
 
                     Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -180,13 +225,11 @@ class ProductWidget extends StatelessWidget {
                                   discountType: productModel.discountType,
                                   discount: productModel.discount),
                               style: titilliumSemiBold.copyWith(
-                                fontSize: 20,
+                                  fontSize: 20,
                                   color: ColorResources.getPrimary(context))),
                         ],
                       ),
                     ),
-
-
                   ],
                 ),
               ),
@@ -225,8 +268,6 @@ class ProductWidget extends StatelessWidget {
                   ),
                 )
               : const SizedBox.shrink(),
-
-         
         ]),
       ),
     );
